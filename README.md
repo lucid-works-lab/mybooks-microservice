@@ -13,3 +13,7 @@ Docker
 docker run -p 8080:8080 -p 50000:50000 -v /c/users/michaellif/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 
 (Windows - shared drives in settings!, reset credentials!)
+
+
+External public API:
+https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=data&format=json

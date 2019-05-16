@@ -1,0 +1,27 @@
+apply plugin: 'kotlin-spring'
+
+dependencies {
+    implementation(
+            'com.fasterxml.jackson.module:jackson-module-kotlin',
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            'org.jetbrains.kotlin:kotlin-reflect',
+            'com.amazonaws:aws-java-sdk-core',
+            'com.amazonaws:aws-lambda-java-core',
+            'com.amazonaws:aws-lambda-java-events',
+            'com.fasterxml.jackson.core:jackson-databind',
+    )
+
+    detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
+}
+
+/* Copy the native files */
+task copyNativeDeps(type: Copy) {
+    from(configurations.compile) {
+        include "*.dylib"
+        include "*.so"
+        include "*.dll"
+    }
+    into 'build/libs'
+}
+
+compileKotlin.dependsOn copyNativeDeps

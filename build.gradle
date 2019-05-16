@@ -1,0 +1,139 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath(
+                'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE',
+                'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71',
+                'org.jetbrains.kotlin:kotlin-allopen:1.2.71',
+                'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1',
+                'com.adarshr:gradle-test-logger-plugin:1.5.0',
+                'net.researchgate:gradle-release:2.8.0',
+                'gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC9.2',
+                'org.owasp:dependency-check-gradle:4.0.2'
+        )
+    }
+}
+
+apply plugin: 'net.researchgate.release'
+apply plugin: 'org.owasp.dependencycheck'
+
+allprojects {
+    group = 'mybook'
+    version = "${version}"
+}
+
+subprojects {
+
+    apply plugin: 'kotlin'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'io.gitlab.arturbosch.detekt'
+    apply plugin: 'jacoco'
+    apply plugin: 'org.owasp.dependencycheck'
+
+    sourceCompatibility = 1.8
+
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
+
+    compileTestKotlin {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xjsr305=strict"]
+            jvmTarget = "1.8"
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release" }
+    }
+
+    dependencies {
+        testImplementation(
+                'org.springframework.boot:spring-boot-starter-test',
+                'org.junit.jupiter:junit-jupiter-params',
+                'org.hamcrest:java-hamcrest',
+                'org.jetbrains.kotlin:kotlin-test'
+        )
+
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine',
+        )
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "com.amazonaws:aws-java-sdk-bom:1.11.552"
+        }
+
+        dependencies {
+            dependency('org.junit.jupiter:junit-jupiter-api:5.4.2')
+            dependency('org.junit.jupiter:junit-jupiter-params:5.4.2')
+            dependency('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+            dependency('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8')
+            dependency('com.amazonaws:aws-lambda-java-core:1.2.0')
+            dependency('com.amazonaws:aws-lambda-java-events:2.2.6')
+            dependency('org.springframework.boot:spring-boot-starter-test:2.1.2.RELEASE') {
+                exclude 'org.hamcrest:hamcrest-core'
+                exclude 'org.hamcrest:hamcrest-library'
+            }
+            dependency('org.hamcrest:java-hamcrest:2.0.0.0')
+            dependency('io.cucumber:cucumber-junit:4.3.1')
+            dependency('io.cucumber:cucumber-java8:4.3.1')
+            dependency('io.cucumber:cucumber-spring:4.3.1')
+
+            dependency('io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-gradle-rework-beta3')
+        }
+    }
+
+    detekt {
+        config = files("../detekt.yml")
+        input = files("$projectDir")
+        filters = ".*/resources/.*,.*/build/.*"
+    }
+
+    jacoco {
+        toolVersion = "0.7.9"
+        reportsDir = file("$buildDir/reports")
+    }
+
+    jacocoTestReport {
+
+        reports {
+            xml.enabled = true
+            xml.setDestination(file("${buildDir}/reports/jacoco/report.xml"))
+            html.enabled = true
+            html.setDestination(file("${buildDir}/reports/jacoco/"))
+        }
+
+        def excludes = [
+                '**/BuildConfig.*',
+                '**/Manifest*.*',
+                '**/*Test*.*'
+        ]
+        classDirectories = fileTree(
+                dir: "$buildDir/classes/kotlin/main"
+        )
+        def coverageSourceDirs = [
+                "src/main/kotlin"
+        ]
+        additionalSourceDirs = files(coverageSourceDirs)
+        sourceDirectories = files(coverageSourceDirs)
+        executionData = files("$buildDir/jacoco/test.exec")
+    }
+
+}
+
+task build {}

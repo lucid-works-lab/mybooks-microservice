@@ -1,0 +1,2 @@
+rootProject.name = 'mybooks-microservice'
+include 'mybooks-microservice-test-utils', 'mybooks-microservice-service', 'mybooks-microservice-it'
