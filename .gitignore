@@ -1,0 +1,34 @@
+.gradle
+**/build/
+**/Checkmarx/
+/bin/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+**/out/
+
+/.idea/*
+!/.idea/runConfigurations
+!/.idea/codeStyles
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Generated file
+**/resources/version-generated.properties
+*.orig
