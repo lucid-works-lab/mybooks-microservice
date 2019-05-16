@@ -1,3 +1,24 @@
-node {
-   echo 'Hello CICD'
+pipeline {
+    agent {
+        node {
+            label 'ubuntu'
+        }
+    }
+    stages {
+        stage("Build") {
+            steps {
+                println "Build"
+            }
+        }
+        stage("Detekt") {
+            steps {
+                println "Detekt"
+            }
+        }
+        stage("Test") {
+            steps {
+                println "Test"
+            }
+        }
+    }
 }
