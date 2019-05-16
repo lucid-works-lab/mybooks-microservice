@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'gradle' }
+    agent { docker { image 'openjdk' } }
     stages {
         stage("Build") {
             steps {
