@@ -6,7 +6,7 @@ pipeline {
         stage("Build") {
             steps {
                 println "Build"
-                sh 'java --version'
+                sh(script: './gradlew build')
             }
         }
         stage("Detekt") {
