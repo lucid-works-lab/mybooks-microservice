@@ -1,13 +1,12 @@
 pipeline {
     agent {
-        node {
-            label 'gradle'
-        }
+        docker { image 'node:7-alpine' }
     }
     stages {
         stage("Build") {
             steps {
                 println "Build"
+                sh 'node --version'
             }
         }
         stage("Detekt") {
