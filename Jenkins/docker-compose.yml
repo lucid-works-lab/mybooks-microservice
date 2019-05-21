@@ -1,0 +1,13 @@
+jenkins:
+  container_name: custom_jenkins
+  build: ./
+  ports:
+    - "127.0.0.1:9090:8080"
+    - "127.0.0.1:50000:50000"
+  volumes:
+    - /c/users/michaellif/jenkins_home:/var/jenkins_home
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    JENKINS_OPTS: "--prefix=/jenkins"
+    COMPOSE_CONVERT_WINDOWS_PATHS: 1
+  restart: always

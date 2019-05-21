@@ -1,7 +1,6 @@
 package mybooks
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mybooks.domain.Book
@@ -17,7 +16,7 @@ import java.time.format.DateTimeFormatter
 class MyBooksApp {
 
 
-    private val books: MutableMap<String, Book> = mutableMapOf<String, Book>()
+    private val books: MutableMap<String, Book> = mutableMapOf()
 
     @Bean
     fun addBook(mapper: ObjectMapper): (Map<String, Any>) -> Unit {
