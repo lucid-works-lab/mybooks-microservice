@@ -1,19 +1,18 @@
 # book-library
 
-- create/update/delete book item in the catalogue (Postgre), load actual book JSON from external service and save it (DynamoDB).
-- use reactor to process commands.
-- rest fo querying
+- add/load book item to catalogue
+- use reactor for event processing
+- use functions for REST
 
+# Installation
 
+## Local Jenkins
+`>> cd Jenkins`
 
-Installation
+`>> docker-compose up`
 
-Docker
+note: Windows - shared drives in settings!, reset credentials!
 
-docker run -p 8080:8080 -p 50000:50000 -v /c/users/michaellif/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+## SAM local
 
-(Windows - shared drives in settings!, reset credentials!)
-
-
-External public API:
-https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=data&format=json
+[Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)

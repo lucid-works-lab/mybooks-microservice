@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        kotlinVersion = '1.2.60'
+    }
     repositories {
         mavenCentral()
         google()
@@ -7,6 +10,11 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath "jp.classmethod.aws:gradle-aws-plugin:0.30"
         classpath(
                 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE',
                 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.71',
@@ -95,6 +103,8 @@ subprojects {
             dependency('io.cucumber:cucumber-spring:4.3.1')
 
             dependency('io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-gradle-rework-beta3')
+            dependency('com.amazonaws:aws-lambda-java-core:1.2.0')
+            dependency('com.amazonaws:aws-lambda-java-events:2.2.6')
         }
     }
 

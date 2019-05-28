@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+  - AWS::Serverless-2016-10-31
+  - AWS::CodeStar
+
+Parameters:
+  ProjectId:
+    Type: String
+    Description: MyBook API
+
+Resources:
+  GetAllBooks:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: mybooks.GetAllBooksEventHandler
+      CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
+      Runtime: java8
+      Timeout: 60
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /getAllBooks
+            Method: get
+
+  LoadBookEventHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: mybooks.LoadBookEventHandler
+      CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar
+      Runtime: java8
+      Timeout: 60
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /loadBook
+            Method: post

@@ -1,51 +1,45 @@
 package mybooks
 
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.messaging.Message
+import org.springframework.messaging.support.GenericMessage
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.getForObject
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 @SpringBootApplication
 class MyBooksApp {
 
-
-    private val books: MutableMap<String, Book> = mutableMapOf()
-
     @Bean
-    fun addBook(mapper: ObjectMapper): (Map<String, Any>) -> Unit {
+    fun addBookResource(mapper: ObjectMapper): (APIGatewayProxyRequestEvent) -> APIGatewayProxyResponseEvent {
         return {
-            val book = mapper.convertValue(it, Book::class.java)
-            books[book.isbn] = book
+            println("+++++++++++++++++addBook  $it")
+            APIGatewayProxyResponseEvent()
         }
     }
 
     @Bean
-    fun loadBook(restTemplate: RestTemplate): (String) -> Unit {
+    fun loadBookResource(restTemplate: RestTemplate): (APIGatewayProxyRequestEvent) -> APIGatewayProxyResponseEvent {
         return {
-            val openLibBook: Map<String, Any>? =
-                    restTemplate.getForObject("https://openlibrary.org/api/books?bibkeys=ISBN:$it&jscmd=data&format=json")
-            val book = Book(
-                    isbn = it,
-                    title = (openLibBook?.get("ISBN:$it") as Map<String, Any>)["title"] as String,
-                    authors = ((openLibBook["ISBN:$it"] as Map<String, Any>)["authors"] as List<Map<String, Any>>)
-                            .map { publisher -> publisher["name"] as String },
-                    published = YearMonth.parse((openLibBook["ISBN:$it"] as Map<String, Any>)["publish_date"] as String,
-                            DateTimeFormatter.ofPattern("MMMM yyyy"))
-            )
-            books[book.isbn] = book
+            println("+++++++++++++++++loadBook $it")
+            APIGatewayProxyResponseEvent()
         }
     }
 
     @Bean
-    fun getAllBooks(): () -> String {
+    fun getAllBooksResource(): (Message<Any>) -> Message<String> {
         return {
-            books.toString()
+            println("+++++++++++++++++getAllBooks")
+            GenericMessage("Hellowwwwww11111",
+                    mapOf("Content-type" to "text/plain",
+                            "statusCode" to 202))
+
         }
     }
 
@@ -54,6 +48,7 @@ class MyBooksApp {
 
     @Bean
     fun restTemplate(): RestTemplate = RestTemplate()
+
 }
 
 data class Book(val isbn: String, val title: String, val authors: List<String>, val published: YearMonth)
