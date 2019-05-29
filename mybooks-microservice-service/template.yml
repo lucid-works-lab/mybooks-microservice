@@ -30,7 +30,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: mybooks.LoadBookEventHandler
-      CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar
+      CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
       Runtime: java8
       Timeout: 60
       Role:
