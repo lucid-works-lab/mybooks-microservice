@@ -28,7 +28,7 @@ Resources:
             Method: get
       Environment:
         Variables:
-          FUNCTION_NAME: 'getAllBooks'
+          FUNCTION_NAME: 'getAllBooksResource'
 
   AddBookEventHandler:
     Type: AWS::Serverless::Function
@@ -49,7 +49,7 @@ Resources:
             Method: post
       Environment:
         Variables:
-          FUNCTION_NAME: 'addBook'
+          FUNCTION_NAME: 'addBookResource'
 
   LoadBookEventHandler:
     Type: AWS::Serverless::Function
@@ -70,4 +70,4 @@ Resources:
             Method: post
       Environment:
         Variables:
-          FUNCTION_NAME: 'loadBook'
+          FUNCTION_NAME: 'loadBookResource'
