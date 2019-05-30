@@ -1,14 +1,15 @@
 package mybooks
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.function.Consumer
+import java.util.function.Supplier
 
 @Configuration
 class MyBooksService {
@@ -16,16 +17,18 @@ class MyBooksService {
     private val books: MutableMap<String, Book> = mutableMapOf()
 
     @Bean
-    fun addBook(mapper: ObjectMapper): (Map<String, Any>) -> Unit {
-        return {
+    @Qualifier("addBook")
+    fun addBook(mapper: ObjectMapper): Consumer<Book> {
+        return Consumer {
             val book = mapper.convertValue(it, Book::class.java)
             books[book.isbn] = book
         }
     }
 
     @Bean
-    fun loadBook(restTemplate: RestTemplate): (String) -> Unit {
-        return {
+    @Qualifier("loadBook")
+    fun loadBook(restTemplate: RestTemplate): Consumer<String> {
+        return Consumer {
             val openLibBook: Map<String, Any>? =
                     restTemplate.getForObject("https://openlibrary.org/api/books?bibkeys=ISBN:$it&jscmd=data&format=json")
             val book = Book(
@@ -41,9 +44,11 @@ class MyBooksService {
     }
 
     @Bean
-    fun getAllBooks(): () -> String {
-        return {
+    @Qualifier("getAllBooks")
+    fun getAllBooks(): Supplier<String> {
+        return Supplier {
             books.toString()
         }
     }
+
 }

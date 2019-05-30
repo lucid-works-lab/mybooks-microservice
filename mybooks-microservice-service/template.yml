@@ -26,6 +26,23 @@ Resources:
             Path: /getAllBooks
             Method: get
 
+  AddBookEventHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: mybooks.AddBookEventHandler
+      CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
+      Runtime: java8
+      Timeout: 60
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /addBook
+            Method: post
+
   LoadBookEventHandler:
     Type: AWS::Serverless::Function
     Properties:
