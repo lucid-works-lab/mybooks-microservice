@@ -31,12 +31,10 @@ class MyBooksAPIGateway {
     fun loadBookResource(@Qualifier("loadBook") function: Consumer<String>,
                          mapper: ObjectMapper): Function<Message<Any>, Message<String>> {
         return Function {
-            println("+++++++++++++++++loadBook $it")
             function.accept(it.payload as String)
             GenericMessage("Success!",
                     mapOf("Content-type" to "application/json",
                             "statusCode" to 202))
-
         }
     }
 
@@ -44,7 +42,6 @@ class MyBooksAPIGateway {
     fun getAllBooksResource(@Qualifier("getAllBooks") function: Supplier<String>,
                             mapper: ObjectMapper): Function<Message<Any>, Message<String>> {
         return Function {
-            println("+++++++++++++++++getAllBooks")
             GenericMessage(mapper.writeValueAsString(function.get()),
                     mapOf("Content-type" to "application/json",
                             "statusCode" to 202))
@@ -55,21 +52,23 @@ class MyBooksAPIGateway {
 
 class AddBookEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
     override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", MyBooksAPIGateway::addBookResource.name)
+        System.setProperty("function.name", "addBookResource")
         return super.handleRequest(event, context)
     }
 }
 
 class LoadBookEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
     override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", MyBooksAPIGateway::loadBookResource.name)
+        System.setProperty("function.name", "loadBookResource")
         return super.handleRequest(event, context)
     }
 }
 
 class GetAllBooksEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
     override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", MyBooksAPIGateway::getAllBooksResource.name)
+        System.setProperty("function.name", "getAllBooksResource")
         return super.handleRequest(event, context)
     }
 }
+
+class Handler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java)

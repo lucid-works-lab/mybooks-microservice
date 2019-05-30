@@ -12,7 +12,8 @@ Resources:
   GetAllBooks:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: mybooks.GetAllBooksEventHandler
+      Handler: mybooks.Handler
+      FunctionName: 'getAllBooks'
       CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
       Runtime: java8
       Timeout: 60
@@ -25,6 +26,9 @@ Resources:
           Properties:
             Path: /getAllBooks
             Method: get
+      Environment:
+        Variables:
+          FUNCTION_NAME: 'getAllBooks'
 
   AddBookEventHandler:
     Type: AWS::Serverless::Function
