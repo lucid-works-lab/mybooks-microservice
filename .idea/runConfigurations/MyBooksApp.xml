@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MyBooksApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="mybooks-microservice-service_main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="mybooks.MyBooksApp" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -14,7 +14,7 @@ import java.util.function.Supplier
 @Configuration
 class MyBooksService {
 
-    private val books: MutableMap<String, Book> = mutableMapOf()
+    private val books: MutableMap<String, Book> = mutableMapOf("abc" to Book("abc123", "The Book II", listOf(), YearMonth.of(2000, 1)))
 
     @Bean
     @Qualifier("addBook")

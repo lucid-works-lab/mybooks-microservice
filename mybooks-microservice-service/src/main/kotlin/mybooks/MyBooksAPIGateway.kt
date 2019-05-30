@@ -3,7 +3,6 @@ package mybooks
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
 import org.springframework.context.annotation.Bean
@@ -46,7 +45,7 @@ class MyBooksAPIGateway {
                             mapper: ObjectMapper): Function<Message<Any>, Message<String>> {
         return Function {
             println("+++++++++++++++++getAllBooks")
-            GenericMessage("", //mapper.writeValueAsString(function.apply())
+            GenericMessage(mapper.writeValueAsString(function.get()),
                     mapOf("Content-type" to "application/json",
                             "statusCode" to 202))
         }
