@@ -1,7 +1,5 @@
 package mybooks
 
-import com.amazonaws.services.lambda.runtime.Context
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
@@ -48,27 +46,6 @@ class MyBooksAPIGateway {
         }
     }
 
-}
-
-class AddBookEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
-    override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", "addBookResource")
-        return super.handleRequest(event, context)
-    }
-}
-
-class LoadBookEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
-    override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", "loadBookResource")
-        return super.handleRequest(event, context)
-    }
-}
-
-class GetAllBooksEventHandler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java) {
-    override fun handleRequest(event: APIGatewayProxyRequestEvent?, context: Context?): Any {
-        System.setProperty("function.name", "getAllBooksResource")
-        return super.handleRequest(event, context)
-    }
 }
 
 class Handler : SpringBootApiGatewayRequestHandler(MyBooksApp::class.java)

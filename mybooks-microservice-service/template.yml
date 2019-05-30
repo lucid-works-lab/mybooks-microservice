@@ -33,7 +33,8 @@ Resources:
   AddBookEventHandler:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: mybooks.AddBookEventHandler
+      Handler: mybooks.Handler
+      FunctionName: 'addBook'
       CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
       Runtime: java8
       Timeout: 60
@@ -46,11 +47,15 @@ Resources:
           Properties:
             Path: /addBook
             Method: post
+      Environment:
+        Variables:
+          FUNCTION_NAME: 'addBook'
 
   LoadBookEventHandler:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: mybooks.LoadBookEventHandler
+      Handler: mybooks.Handler
+      FunctionName: 'loadBook'
       CodeUri: ./build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT-aws.jar
       Runtime: java8
       Timeout: 60
@@ -63,3 +68,6 @@ Resources:
           Properties:
             Path: /loadBook
             Method: post
+      Environment:
+        Variables:
+          FUNCTION_NAME: 'loadBook'
