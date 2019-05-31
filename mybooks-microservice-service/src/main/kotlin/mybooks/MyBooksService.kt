@@ -1,6 +1,5 @@
 package mybooks
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,19 +9,19 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.function.Consumer
 import java.util.function.Supplier
+import java.util.function.Function
 
 @Configuration
 class MyBooksService {
 
     private val books: MutableMap<String, Book> =
-            mutableMapOf("abc" to Book("abc123", "The Book II", listOf(), YearMonth.of(2000, 1)))
+            mutableMapOf("abc" to Book("abc", "The Book II", listOf(), YearMonth.of(2000, 1)))
 
     @Bean
     @Qualifier("addBook")
-    fun addBook(mapper: ObjectMapper): Consumer<Book> {
+    fun addBook(): Consumer<Book> {
         return Consumer {
-            val book = mapper.convertValue(it, Book::class.java)
-            books[book.isbn] = book
+            books[it.isbn] = it
         }
     }
 
@@ -41,6 +40,22 @@ class MyBooksService {
                             DateTimeFormatter.ofPattern("MMMM yyyy"))
             )
             books[book.isbn] = book
+        }
+    }
+
+    @Bean
+    @Qualifier("removeBook")
+    fun removeBook(): Consumer<String> {
+        return Consumer {
+            books.remove(it)
+        }
+    }
+
+    @Bean
+    @Qualifier("getBookByISBN")
+    fun getBookByISBN(): Function<String, Book?> {
+        return Function {
+            books[it]
         }
     }
 
