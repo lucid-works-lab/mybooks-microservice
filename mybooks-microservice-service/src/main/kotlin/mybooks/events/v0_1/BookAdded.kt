@@ -1,4 +1,4 @@
-package mybooks.events
+package mybooks.events.v0_1
 
 import mybooks.eventbus.EventData
 import java.time.YearMonth

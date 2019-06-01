@@ -1,17 +1,17 @@
 package mybooks.eventbus
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonTypeInfo
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-interface Event<TEventData : EventData, TEventMeta : EventMeta> {
+data class Event<TEventData : EventData, TEventMeta : EventMeta> (
 
-    var meta: TEventMeta?
+    var id: UUID,
 
-    var metaVersion: String?
+    var meta: TEventMeta,
 
-    var data: TEventData?
+    var metaVersion: String,
 
+    var data: TEventData
 
-}
+)

@@ -1,5 +1,8 @@
 package mybooks
 
+import mybooks.eventbus.Event
+import mybooks.eventbus.EventData
+import mybooks.eventbus.EventMeta
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -8,14 +11,22 @@ import org.springframework.web.client.getForObject
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.function.Consumer
-import java.util.function.Supplier
 import java.util.function.Function
+import java.util.function.Supplier
 
 @Configuration
 class MyBooksService {
 
     private val books: MutableMap<String, Book> =
             mutableMapOf("abc" to Book("abc", "The Book II", listOf(), YearMonth.of(2000, 1)))
+
+    @Bean
+    @Qualifier("publishEvent")
+    fun publishEvent(eventBus: MyBooksEventBus): Consumer<Event<in EventData, in EventMeta>> {
+        return Consumer {
+            eventBus.publishEvent(it)
+        }
+    }
 
     @Bean
     @Qualifier("addBook")
