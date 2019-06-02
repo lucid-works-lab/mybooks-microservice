@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import com.google.common.eventbus.Subscribe
-import mybooks.events.v0_1.BookAdded
+import mybooks.events.v1.BookAdded
 
 
 @Configuration

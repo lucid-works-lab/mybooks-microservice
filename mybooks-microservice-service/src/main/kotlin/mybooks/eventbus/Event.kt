@@ -10,8 +10,6 @@ data class Event<TEventData : EventData, TEventMeta : EventMeta> (
 
     var meta: TEventMeta,
 
-    var metaVersion: String,
-
     var data: TEventData
 
 )

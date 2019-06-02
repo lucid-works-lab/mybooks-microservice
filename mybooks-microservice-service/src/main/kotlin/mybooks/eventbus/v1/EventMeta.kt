@@ -7,8 +7,6 @@ data class EventMeta(
 
         var timestamp: Instant,
 
-        var eventType: String,
-
-        var dataVersion: String
+        var eventType: String
 
 ) : EventMetaBase
