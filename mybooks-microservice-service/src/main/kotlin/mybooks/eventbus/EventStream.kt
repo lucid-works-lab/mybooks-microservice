@@ -2,7 +2,7 @@ package mybooks.eventbus
 
 import reactor.core.publisher.Flux
 
-interface EventBus {
+interface EventStream {
 
     fun publishEvent(event: Event<in EventData, in EventMeta>)
 

@@ -3,7 +3,7 @@ package mybooks
 import mybooks.eventbus.Event
 import mybooks.eventbus.EventData
 import mybooks.eventbus.EventMeta
-import mybooks.eventbus.EventBus
+import mybooks.eventbus.EventStream
 import org.springframework.beans.factory.DisposableBean
 import org.springframework.stereotype.Service
 import reactor.core.publisher.BaseSubscriber
@@ -11,7 +11,7 @@ import reactor.core.publisher.DirectProcessor
 import reactor.core.publisher.Flux
 
 @Service
-final class MyBooksEventBus : BaseSubscriber<Event<in EventData, in EventMeta>>(), DisposableBean, EventBus {
+final class MyBooksEventStream : BaseSubscriber<Event<in EventData, in EventMeta>>(), DisposableBean, EventStream {
 
     private val publisher = DirectProcessor.create<Event<in EventData, in EventMeta>>()
 

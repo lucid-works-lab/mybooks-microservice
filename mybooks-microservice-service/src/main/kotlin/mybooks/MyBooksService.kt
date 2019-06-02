@@ -22,9 +22,9 @@ class MyBooksService {
 
     @Bean
     @Qualifier("publishEvent")
-    fun publishEvent(eventBus: MyBooksEventBus): Consumer<Event<in EventData, in EventMeta>> {
+    fun publishEvent(eventStream: MyBooksEventStream): Consumer<Event<in EventData, in EventMeta>> {
         return Consumer {
-            eventBus.publishEvent(it)
+            eventStream.publishEvent(it)
         }
     }
 

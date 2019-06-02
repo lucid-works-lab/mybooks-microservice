@@ -1,18 +1,32 @@
 package mybooks
 
+import com.google.common.eventbus.EventBus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
+import com.google.common.eventbus.Subscribe
+import mybooks.events.v0_1.BookAdded
+
 
 @Configuration
 class MyBooksEventHandler : CommandLineRunner {
 
     @Autowired
-    private lateinit var eventBus: MyBooksEventBus
+    private lateinit var eventStream: MyBooksEventStream
+
+    @Autowired
+    private lateinit var eventBus: EventBus
 
     override fun run(vararg args: String?) {
-        eventBus.streamEvents().subscribe {
-            println("++++++++++++++ ${it.data}")
+        eventBus.register(this)
+        eventStream.streamEvents().subscribe {
+            it.data?.let {data -> eventBus.post(data)}
         }
     }
+
+    @Subscribe
+    fun apply(event: BookAdded) {
+        println("++++++++++++++ ${event}")
+    }
+
 }
