@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import com.google.common.eventbus.Subscribe
 import mybooks.events.v1.BookAdded
+import mybooks.events.v1.BookRemoved
 
 
 @Configuration
@@ -29,4 +30,8 @@ class MyBooksEventHandler : CommandLineRunner {
         println("++++++++++++++ ${event}")
     }
 
+    @Subscribe
+    fun apply(event: BookRemoved) {
+        println("++++++++++++++ ${event}")
+    }
 }
