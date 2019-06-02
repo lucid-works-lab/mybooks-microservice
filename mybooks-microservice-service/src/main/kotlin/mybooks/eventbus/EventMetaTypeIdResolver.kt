@@ -13,7 +13,10 @@ class EventMetaTypeIdResolver : TypeIdResolverBase() {
     }
 
     override fun idFromValueAndType(value: Any, suggestedType: Class<*>): String {
-        return "v1" //TODO
+        when (value) {
+            is EventMeta -> return "v1"
+            else -> throw Error("Unknown class")
+        }
     }
 
     override fun getMechanism(): JsonTypeInfo.Id {
