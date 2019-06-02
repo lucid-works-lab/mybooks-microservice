@@ -7,6 +7,4 @@ import mybooks.eventbus.v1.EventMeta
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.PROPERTY, property = "metaVersion")
 @JsonTypeIdResolver(EventMetaTypeIdResolver::class)
-@JsonSubTypes(
-        JsonSubTypes.Type(value = EventMeta::class, name = "v1"))
 interface EventMeta
