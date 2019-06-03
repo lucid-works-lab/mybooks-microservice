@@ -1,6 +1,5 @@
 package mybooks.events.v1
 
-import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeName
 import mybooks.eventbus.EventData
 import java.time.YearMonth
@@ -11,4 +10,4 @@ data class BookAdded(
         val title: String,
         val authors: List<String>,
         val published: YearMonth
-):EventData
+) : EventData

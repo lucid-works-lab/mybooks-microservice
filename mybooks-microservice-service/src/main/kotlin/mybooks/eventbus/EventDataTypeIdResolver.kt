@@ -14,9 +14,9 @@ class EventDataTypeIdResolver : TypeIdResolverBase() {
     }
 
     override fun idFromValueAndType(value: Any, suggestedType: Class<*>): String {
-        when (value) {
-            is BookAdded -> return "BookAdded_v1"
-            is BookRemoved -> return "BookRemoved_v1"
+        return when (value) {
+            is BookAdded -> "BookAdded_v1"
+            is BookRemoved -> "BookRemoved_v1"
             else -> throw Error("Unknown class")
         }
     }
@@ -26,9 +26,9 @@ class EventDataTypeIdResolver : TypeIdResolverBase() {
     }
 
     override fun typeFromId(context: DatabindContext, id: String): JavaType {
-        when (id) {
-            "BookAdded_v1" -> return context.constructType(BookAdded::class.java)
-            "BookRemoved_v1" -> return context.constructType(BookRemoved::class.java)
+        return when (id) {
+            "BookAdded_v1" -> context.constructType(BookAdded::class.java)
+            "BookRemoved_v1" -> context.constructType(BookRemoved::class.java)
             else -> throw Error("Wrong id")
         }
     }

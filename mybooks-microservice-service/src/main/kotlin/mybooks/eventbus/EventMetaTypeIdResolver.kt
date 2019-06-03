@@ -13,8 +13,8 @@ class EventMetaTypeIdResolver : TypeIdResolverBase() {
     }
 
     override fun idFromValueAndType(value: Any, suggestedType: Class<*>): String {
-        when (value) {
-            is EventMeta -> return "v1"
+        return when (value) {
+            is EventMeta -> "v1"
             else -> throw Error("Unknown class")
         }
     }
@@ -24,8 +24,8 @@ class EventMetaTypeIdResolver : TypeIdResolverBase() {
     }
 
     override fun typeFromId(context: DatabindContext, id: String): JavaType {
-        when (id) {
-            "v1" -> return context.constructType(EventMeta::class.java)
+        return when (id) {
+            "v1" -> context.constructType(EventMeta::class.java)
             else -> throw Error("Wrong id")
         }
     }
