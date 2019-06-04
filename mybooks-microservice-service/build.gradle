@@ -8,103 +8,112 @@ apply plugin: 'com.adarshr.test-logger'
 apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'jp.classmethod.aws'
 apply plugin: 'jp.classmethod.aws.lambda'
+apply plugin: 'kotlin-jpa'
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 dependencies {
-    implementation(
-            'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework.cloud:spring-cloud-starter-function-web:2.1.0.RELEASE',
-            'org.springframework.cloud:spring-cloud-function-adapter-aws:2.1.0.RELEASE',
-            'org.springframework.cloud:spring-cloud-function-kotlin:2.1.0.RELEASE',
-            'com.fasterxml.jackson.module:jackson-module-kotlin',
-            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
-            'org.jetbrains.kotlin:kotlin-reflect',
-            'com.amazonaws:aws-java-sdk-core',
-            'com.amazonaws:aws-java-sdk-lambda:1.9.22',
-            'com.fasterxml.jackson.core:jackson-databind',
-            'com.amazonaws:aws-lambda-java-core',
-            'com.amazonaws:aws-lambda-java-events',
-            'com.google.guava:guava:27.1-jre'
-    )
+  implementation(
+  'org.springframework.boot:spring-boot-starter-web',
+  'org.springframework.boot:spring-boot-starter-data-jpa',
+  'org.springframework.cloud:spring-cloud-starter-function-web:2.1.0.RELEASE',
+  'org.springframework.cloud:spring-cloud-function-adapter-aws:2.1.0.RELEASE',
+  'org.springframework.cloud:spring-cloud-function-kotlin:2.1.0.RELEASE',
+  'com.fasterxml.jackson.module:jackson-module-kotlin',
+  'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+  'org.jetbrains.kotlin:kotlin-reflect',
+  'com.amazonaws:aws-java-sdk-core',
+  'com.amazonaws:aws-java-sdk-lambda:1.9.22',
+  'com.fasterxml.jackson.core:jackson-databind',
+  'com.amazonaws:aws-lambda-java-core',
+  'com.amazonaws:aws-lambda-java-events',
+  'com.google.guava:guava:27.1-jre',
+  'com.h2database:h2'
+  )
 
-    detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
+  detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
 
-    testCompile project(':mybooks-microservice-test-utils')
+  testCompile project(':mybooks-microservice-test-utils')
 
-    testImplementation(
-            'io.cucumber:cucumber-junit',
-            'io.cucumber:cucumber-java8',
-            'io.cucumber:cucumber-spring',
-            'org.hamcrest:java-hamcrest',
-            'com.jayway.jsonpath:json-path:2.4.0',
-    )
+  testImplementation(
+  'io.cucumber:cucumber-junit',
+  'io.cucumber:cucumber-java8',
+  'io.cucumber:cucumber-spring',
+  'org.hamcrest:java-hamcrest',
+  'com.jayway.jsonpath:json-path:2.4.0',
+  )
 
+}
+
+allOpen {
+  annotation("javax.persistence.Entity")
+  annotation("javax.persistence.MappedSuperclass")
+  annotation("javax.persistence.Embeddable")
 }
 
 /* Copy the native files */
 task copyNativeDeps(type: Copy) {
-    from(configurations.compile + configurations.testCompile) {
-        include "*.dylib"
-        include "*.so"
-        include "*.dll"
-    }
-    into 'build/libs'
+  from(configurations.compile + configurations.testCompile) {
+    include "*.dylib"
+    include "*.so"
+    include "*.dll"
+  }
+  into 'build/libs'
 }
 
 test {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter'
-        excludeEngines 'junit-vintage'
-    }
-    jacoco {
-        destinationFile = file("${buildDir}/jacoco/test.exec")
-    }
+  useJUnitPlatform {
+    includeEngines 'junit-jupiter'
+    excludeEngines 'junit-vintage'
+  }
+  jacoco {
+    destinationFile = file("${buildDir}/jacoco/test.exec")
+  }
 
-    systemProperty 'java.library.path', 'build/libs'
-    environment 'AWS_ACCESS_KEY_ID', 'applmgr'
-    environment 'AWS_DEFAULT_REGION', 'us-east-1'
-    environment 'AWS_SECRET_ACCESS_KEY', 'applmgr'
-    environment 'DYNAMODB_ENDPOINT', 'http://localhost:8000'
-    environment 'DYNAMODB_REGION', 'us-east-1'
-    environment 'DYNAMODB_OFFERS_TABLENAME', 'offers'
-    environment 'DYNAMODB_REGIONAL_PARTNERS_TABLENAME', 'regional-partners'
-    environment 'DYNAMODB_REGIONAL_OFFERS_TABLENAME', 'regional-offers'
-    environment 'URL_PREFIX', 'nova-regional-offers'
-    environment 'CACHE_TYPE', 'noop'
+  systemProperty 'java.library.path', 'build/libs'
+  environment 'AWS_ACCESS_KEY_ID', 'applmgr'
+  environment 'AWS_DEFAULT_REGION', 'us-east-1'
+  environment 'AWS_SECRET_ACCESS_KEY', 'applmgr'
+  environment 'DYNAMODB_ENDPOINT', 'http://localhost:8000'
+  environment 'DYNAMODB_REGION', 'us-east-1'
+  environment 'DYNAMODB_OFFERS_TABLENAME', 'offers'
+  environment 'DYNAMODB_REGIONAL_PARTNERS_TABLENAME', 'regional-partners'
+  environment 'DYNAMODB_REGIONAL_OFFERS_TABLENAME', 'regional-offers'
+  environment 'URL_PREFIX', 'nova-regional-offers'
+  environment 'CACHE_TYPE', 'noop'
 }
 
 configurations {
-    cucumberRuntime {
-        extendsFrom testRuntime
-    }
+  cucumberRuntime {
+    extendsFrom testRuntime
+  }
 }
 
 testlogger {
-    theme 'mocha'
-    showExceptions true
-    slowThreshold 2000
-    showSummary true
-    showPassed true
-    showSkipped true
-    showFailed true
-    showStandardStreams false
-    showPassedStandardStreams true
-    showSkippedStandardStreams true
-    showFailedStandardStreams true
+  theme 'mocha'
+  showExceptions true
+  slowThreshold 2000
+  showSummary true
+  showPassed true
+  showSkipped true
+  showFailed true
+  showStandardStreams false
+  showPassedStandardStreams true
+  showSkippedStandardStreams true
+  showFailedStandardStreams true
 }
 
 shadowJar {
-    classifier = 'aws'
-    mergeServiceFiles()
-    append 'META-INF/spring.handlers'
-    append 'META-INF/spring.schemas'
-    append 'META-INF/spring.tooling'
-    transform(com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer) {
-        paths = ['META-INF/spring.factories']
-        mergeStrategy = "append"
-    }
+  classifier = 'aws'
+  mergeServiceFiles()
+  append 'META-INF/spring.handlers'
+  append 'META-INF/spring.schemas'
+  append 'META-INF/spring.tooling'
+  transform(com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer) {
+    paths = ['META-INF/spring.factories']
+    mergeStrategy = "append"
+  }
 }
 
 assemble.dependsOn shadowJar

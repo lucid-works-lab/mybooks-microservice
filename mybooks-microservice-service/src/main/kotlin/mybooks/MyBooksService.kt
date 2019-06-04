@@ -3,6 +3,7 @@ package mybooks
 import mybooks.eventbus.Event
 import mybooks.eventbus.EventData
 import mybooks.eventbus.EventMeta
+import mybooks.repo.BookRepository
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,35 +11,26 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
 
+
 @Configuration
 class MyBooksService {
 
-    private val books: MutableMap<String, Book> =
-            mutableMapOf("abc" to Book("abc", "The Book II", listOf(), YearMonth.of(2000, 1)))
-
-    @Bean
-    @Qualifier("publishEvent")
-    fun publishEvent(eventStream: MyBooksEventStream): Consumer<Event<in EventData, in EventMeta>> {
-        return Consumer {
-            eventStream.publishEvent(it)
-        }
-    }
-
     @Bean
     @Qualifier("addBook")
-    fun addBook(): Consumer<Book> {
+    fun addBook(bookRepo: BookRepository): Consumer<Book> {
         return Consumer {
-            books[it.isbn] = it
+            bookRepo.save(it)
         }
     }
 
     @Bean
     @Qualifier("loadBook")
-    fun loadBook(restTemplate: RestTemplate): Consumer<String> {
+    fun loadBook(restTemplate: RestTemplate, bookRepo: BookRepository): Consumer<String> {
         return Consumer {
             val openLibBook: Map<String, Any>? =
                     restTemplate.getForObject("https://openlibrary.org/api/books?bibkeys=ISBN:$it&jscmd=data&format=json")
@@ -50,34 +42,41 @@ class MyBooksService {
                     published = YearMonth.parse((openLibBook["ISBN:$it"] as Map<String, Any>)["publish_date"] as String,
                             DateTimeFormatter.ofPattern("MMMM yyyy"))
             )
-            books[book.isbn] = book
+            bookRepo.save(book)
         }
     }
 
     @Bean
     @Qualifier("removeBook")
-    fun removeBook(): Consumer<String> {
+    fun removeBook(bookRepo: BookRepository): Consumer<String> {
         return Consumer {
-            books.remove(it)
+            bookRepo.deleteById(UUID.fromString(it))
         }
     }
 
     @Bean
     @Qualifier("getBookByISBN")
-    fun getBookByISBN(): Function<String, Book?> {
+    fun getBookByISBN(bookRepo: BookRepository): Function<String, Book?> {
         return Function {
-          return@Function books[it]
+            return@Function bookRepo.findByIsbn(it).last()
         }
     }
 
     @Bean
     @Qualifier("getAllBooks")
-    fun getAllBooks(): Supplier<List<Book>> {
+    fun getAllBooks(bookRepo: BookRepository): Supplier<List<Book>> {
         return Supplier {
-            val array = arrayListOf<Book>()
-            array.addAll(books.values)
-            return@Supplier array
+            val list = arrayListOf<Book>()
+            bookRepo.findAll().forEach { e -> list.add(e) }
+            return@Supplier list
         }
     }
 
+    @Bean
+    @Qualifier("publishEvent")
+    fun publishEvent(eventStream: MyBooksEventStream): Consumer<Event<in EventData, in EventMeta>> {
+        return Consumer {
+            eventStream.publishEvent(it)
+        }
+    }
 }
