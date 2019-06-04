@@ -7,8 +7,6 @@ import mybooks.eventbus.EventMeta as EventMetaBase
 @JsonTypeName("v1")
 data class EventMeta(
 
-        var timestamp: Instant,
-
-        var eventType: String
+        var timestamp: Instant
 
 ) : EventMetaBase

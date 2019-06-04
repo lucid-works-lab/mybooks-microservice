@@ -66,15 +66,17 @@ class MyBooksService {
     @Qualifier("getBookByISBN")
     fun getBookByISBN(): Function<String, Book?> {
         return Function {
-            books[it]
+          return@Function books[it]
         }
     }
 
     @Bean
     @Qualifier("getAllBooks")
-    fun getAllBooks(): Supplier<String> {
+    fun getAllBooks(): Supplier<List<Book>> {
         return Supplier {
-            books.toString()
+            val array = arrayListOf<Book>()
+            array.addAll(books.values)
+            return@Supplier array
         }
     }
 

@@ -1,0 +1,327 @@
+{
+	"info": {
+		"_postman_id": "32788947-ecc2-40f2-a5a2-42e0852549f4",
+		"name": "MyBook_Spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Spring",
+			"item": [
+				{
+					"name": "addBook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"asd\",\n    \"title\": \"The Book\",\n    \"authors\": [\"Abc\", \"Def\"],\n    \"published\": \"2012-01\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/addBook",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"addBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeBook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "asd"
+						},
+						"url": {
+							"raw": "localhost:8080/removeBook",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"removeBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadBook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "9780980200447"
+						},
+						"url": {
+							"raw": "localhost:8080/loadBook",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loadBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBooks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/getAllBooks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"getAllBooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBookByISBN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "abc"
+						},
+						"url": {
+							"raw": "localhost:8080/getBookByISBN",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"getBookByISBN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publishEvent BookAdded",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000,\n    \t\"eventType\":\"BookAdded\"\n    },\n    \"data\":  {\n    \t\"command\":\"BookAdded_v1\",\n    \t\"isbn\":\"asdf1234555\",\n    \t\"title\":\"Title111\",\n    \t\"authors\": [\"Abc\", \"Def\"],\n\t\t\"published\": \"2012-01\"\n    }\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/publishEvent",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publishEvent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publishEvent BookRemoved",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000,\n    \t\"eventType\":\"BookAdded\"\n    },\n    \"data\":  {\n    \t\"command\":\"BookRemoved_v1\",\n    \t\"isbn\":\"asdf1234555\"\n    }\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/publishEvent",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publishEvent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SAM",
+			"item": [
+				{
+					"name": "addBook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"asd\",\n    \"title\": \"The Book\",\n    \"authors\": [\"Abc\", \"Def\"],\n    \"published\": \"2012-01\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/addBook",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"addBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loadBook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"9780980200447\""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/loadBook",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"loadBook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllBooks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"message\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/getAllBooks",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"getAllBooks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate
 class MyBooksApp {
 
     @Bean
-    fun getMapper(): ObjectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
+    fun objectMapper(): ObjectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     @Bean
     fun restTemplate(): RestTemplate = RestTemplate()

@@ -41,7 +41,6 @@ dependencies {
             'com.jayway.jsonpath:json-path:2.4.0',
     )
 
-    detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
 }
 
 /* Copy the native files */

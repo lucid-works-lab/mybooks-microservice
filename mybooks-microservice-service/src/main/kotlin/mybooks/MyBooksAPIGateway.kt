@@ -37,7 +37,7 @@ class MyBooksAPIGateway {
     }
 
     @Bean
-    fun getAllBooksResource(@Qualifier("getAllBooks") function: Supplier<String>,
+    fun getAllBooksResource(@Qualifier("getAllBooks") function: Supplier<List<Book>>,
                             mapper: ObjectMapper): Function<Message<Any>, Message<String>> {
         return Function {
             GenericMessage(mapper.writeValueAsString(function.get()),
