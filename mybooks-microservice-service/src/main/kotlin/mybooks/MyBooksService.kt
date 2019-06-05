@@ -49,16 +49,16 @@ class MyBooksService {
     @Bean
     @Qualifier("removeBook")
     fun removeBook(bookRepo: BookRepository): Consumer<String> {
-        return Consumer {
-            bookRepo.deleteById(UUID.fromString(it))
+        return Consumer {isbn ->
+            bookRepo.deleteById(isbn)
         }
     }
 
     @Bean
     @Qualifier("getBookByISBN")
     fun getBookByISBN(bookRepo: BookRepository): Function<String, Book?> {
-        return Function {
-            return@Function bookRepo.findByIsbn(it).last()
+        return Function { isbn ->
+            return@Function bookRepo.findById(isbn).orElse(null)
         }
     }
 

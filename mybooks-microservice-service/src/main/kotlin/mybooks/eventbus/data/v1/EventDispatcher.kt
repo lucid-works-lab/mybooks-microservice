@@ -1,9 +1,7 @@
 package mybooks.eventbus.data.v1
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.common.eventbus.EventBus
-import com.google.common.eventbus.Subscribe
 import mybooks.Book
+import mybooks.MyBooksEventStream
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.CommandLineRunner
@@ -17,10 +15,7 @@ import java.util.function.Consumer
 class EventDispatcher : CommandLineRunner {
 
     @Autowired
-    private lateinit var eventBus: EventBus
-
-    @Autowired
-    private lateinit var mapper: ObjectMapper
+    private lateinit var eventStream: MyBooksEventStream
 
     @Autowired
     @Qualifier("addBook")
@@ -30,23 +25,21 @@ class EventDispatcher : CommandLineRunner {
     @Qualifier("removeBook")
     private lateinit var removeBookFunction: Consumer<String>
 
-
     override fun run(vararg args: String?) {
-        eventBus.register(this)
+        eventStream.streamEvents().subscribe { event ->
+            event.data?.let { data ->
+                when (data) {
+                    is BookAdded -> {
+                        addBookFunction.accept(Book(
+                                isbn = data.isbn,
+                                title = data.title,
+                                authors = data.authors,
+                                published = data.published))
+                    }
+                    is BookRemoved -> removeBookFunction.accept(data.isbn)
+                }
+            }
+        }
     }
 
-
-    @Subscribe
-    fun apply(event: BookAdded) {
-        addBookFunction.accept(Book(
-                isbn = event.isbn,
-                title  = event.title,
-                authors = event.authors,
-                published = event.published))
-    }
-
-    @Subscribe
-    fun apply(event: BookRemoved) {
-        removeBookFunction.accept(event.isbn)
-    }
 }

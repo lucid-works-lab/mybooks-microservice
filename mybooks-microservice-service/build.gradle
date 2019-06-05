@@ -28,7 +28,6 @@ dependencies {
   'com.fasterxml.jackson.core:jackson-databind',
   'com.amazonaws:aws-lambda-java-core',
   'com.amazonaws:aws-lambda-java-events',
-  'com.google.guava:guava:27.1-jre',
   'com.h2database:h2'
   )
 
