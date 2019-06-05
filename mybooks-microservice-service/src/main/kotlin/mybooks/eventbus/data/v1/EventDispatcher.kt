@@ -11,7 +11,6 @@ import org.springframework.core.annotation.Order
 import java.util.function.Consumer
 
 @Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
 class EventDispatcher : CommandLineRunner {
 
     @Autowired
