@@ -1,5 +1,7 @@
 package mybooks.eventbus
 
+import mybooks.eventbus.data.EventData
+import mybooks.eventbus.meta.EventMeta
 import reactor.core.publisher.Flux
 
 interface EventStream {

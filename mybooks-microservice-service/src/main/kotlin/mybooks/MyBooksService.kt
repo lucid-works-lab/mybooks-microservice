@@ -1,8 +1,8 @@
 package mybooks
 
 import mybooks.eventbus.Event
-import mybooks.eventbus.EventData
-import mybooks.eventbus.EventMeta
+import mybooks.eventbus.data.EventData
+import mybooks.eventbus.meta.EventMeta
 import mybooks.repo.BookRepository
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -75,8 +75,8 @@ class MyBooksService {
     @Bean
     @Qualifier("publishEvent")
     fun publishEvent(eventStream: MyBooksEventStream): Consumer<Event<in EventData, in EventMeta>> {
-        return Consumer {
-            eventStream.publishEvent(it)
+        return Consumer { event ->
+            eventStream.publishEvent(event)
         }
     }
 }

@@ -1,7 +1,6 @@
-package mybooks.events.v1
+package mybooks.eventbus.data.v1
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.common.eventbus.AllowConcurrentEvents
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import mybooks.Book

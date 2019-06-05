@@ -1,8 +1,9 @@
-package mybooks.eventbus
+package mybooks.eventbus.data
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver
+import mybooks.eventbus.EventTypeIdResolver
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.PROPERTY, property = "command")
-@JsonTypeIdResolver(EventDataTypeIdResolver::class)
+@JsonTypeIdResolver(EventTypeIdResolver::class)
 interface EventData

@@ -1,8 +1,8 @@
 package mybooks
 
 import mybooks.eventbus.Event
-import mybooks.eventbus.EventData
-import mybooks.eventbus.EventMeta
+import mybooks.eventbus.data.EventData
+import mybooks.eventbus.meta.EventMeta
 import mybooks.eventbus.EventStream
 import org.springframework.beans.factory.DisposableBean
 import org.springframework.stereotype.Service
