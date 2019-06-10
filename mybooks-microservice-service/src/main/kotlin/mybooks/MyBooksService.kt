@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
@@ -74,7 +73,7 @@ class MyBooksService {
 
     @Bean
     @Qualifier("publishEvent")
-    fun publishEvent(eventStream: MyBooksEventStream): Consumer<Event<in EventData, in EventMeta>> {
+    fun publishEvent(eventStream: InMemoryEventStream): Consumer<Event<in EventData, in EventMeta>> {
         return Consumer { event ->
             eventStream.publishEvent(event)
         }
