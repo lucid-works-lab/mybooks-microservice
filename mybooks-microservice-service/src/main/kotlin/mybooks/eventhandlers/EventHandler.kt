@@ -1,23 +1,15 @@
 package mybooks.eventhandlers
 
-import mybooks.InMemoryEventStream
 import mybooks.eventbus.Event
 import mybooks.eventbus.data.EventData
 import mybooks.eventbus.meta.EventMeta
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.CommandLineRunner
-import kotlin.reflect.KClass
 
-abstract class EventHandler<T:EventData>(private val type: KClass<T>) : CommandLineRunner {
+abstract class EventHandler {
 
     @Autowired
-    private lateinit var eventStream: InMemoryEventStream
+    lateinit var eventHandlerManager: EventHandlerManager
 
-    override fun run(vararg args: String?) {
-        eventStream.streamEvents(type).subscribe { event ->
-            handleEvent(event)
-        }
-    }
-
-    abstract fun handleEvent(event: Event<T, out EventMeta>)
+    inline fun <reified T : EventData> addEventHandler(noinline handler: (Event<T, out EventMeta>) -> Unit) =
+            eventHandlerManager.addEventHandler(T::class, handler)
 }
