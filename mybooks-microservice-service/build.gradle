@@ -5,7 +5,6 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'com.adarshr.test-logger'
-apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'jp.classmethod.aws'
 apply plugin: 'jp.classmethod.aws.lambda'
 apply plugin: 'kotlin-jpa'
@@ -30,8 +29,6 @@ dependencies {
   'com.amazonaws:aws-lambda-java-events',
   'com.h2database:h2'
   )
-
-  detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
 
   testCompile project(':mybooks-microservice-test-utils')
 

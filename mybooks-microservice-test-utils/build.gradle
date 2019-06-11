@@ -10,8 +10,6 @@ dependencies {
             'com.amazonaws:aws-lambda-java-events',
             'com.fasterxml.jackson.core:jackson-databind',
     )
-
-    detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
 }
 
 /* Copy the native files */
