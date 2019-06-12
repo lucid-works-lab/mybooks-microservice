@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "32788947-ecc2-40f2-a5a2-42e0852549f4",
-		"name": "MyBook_Spring",
+		"name": "MyBook",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -170,7 +170,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000,\n    \t\"eventType\":\"BookAdded\"\n    },\n    \"data\":  {\n    \t\"command\":\"BookAdded_v1\",\n    \t\"isbn\":\"asdf1234555\",\n    \t\"title\":\"Title111\",\n    \t\"authors\": [\"Abc\", \"Def\"],\n\t\t\"published\": \"2012-01\"\n    }\n}"
+							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000\n    },\n    \"data\":  {\n    \t\"command\":\"BookAdded_v1\",\n    \t\"isbn\":\"asdf12345551\",\n    \t\"title\":\"Title111\",\n    \t\"authors\": [\"Abc\", \"Def\"],\n\t\t\"published\": \"2012-01\"\n    }\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/publishEvent",
@@ -199,7 +199,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000,\n    \t\"eventType\":\"BookAdded\"\n    },\n    \"data\":  {\n    \t\"command\":\"BookRemoved_v1\",\n    \t\"isbn\":\"asdf1234555\"\n    }\n}"
+							"raw": "{\n\t\"id\": \"38178928-9281-42aa-9f70-8c39c453baf1\",\n    \"meta\": {\n    \t\"metaVersion\": \"v1\",\n    \t\"timestamp\":1000\n    },\n    \"data\":  {\n    \t\"command\":\"BookRemoved_v1\",\n    \t\"isbn\":\"asdf12345551\"\n    }\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/publishEvent",
