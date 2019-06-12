@@ -9,6 +9,7 @@ dependencies {
             'com.amazonaws:aws-lambda-java-core',
             'com.amazonaws:aws-lambda-java-events',
             'com.fasterxml.jackson.core:jackson-databind',
+            'com.github.tomakehurst:wiremock-jre8'
     )
 }
 

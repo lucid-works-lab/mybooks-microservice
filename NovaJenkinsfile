@@ -14,9 +14,9 @@ pipeline {
                 println "Detekt"
             }
         }
-        stage("Test") {
+        stage("OpenLibraryMock") {
             steps {
-                println "Test"
+                println "OpenLibraryMock"
             }
         }
     }

@@ -106,6 +106,7 @@ subprojects {
 
             dependency('com.amazonaws:aws-lambda-java-core:1.2.0')
             dependency('com.amazonaws:aws-lambda-java-events:2.2.6')
+            dependency('com.github.tomakehurst:wiremock-jre8:2.23.2')
         }
 
     }

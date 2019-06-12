@@ -1,0 +1,41 @@
+{
+	"ISBN:0142437239": {
+		"publishers": [
+			{
+				"name": "Penguin Putnam"
+			}
+		],
+		"pagination": "xl,1023p. ;",
+		"identifiers": {
+			"openlibrary": [
+				"OL22070067M"
+			],
+			"isbn_10": [
+				"0142437239"
+			],
+			"goodreads": [
+				"3836"
+			],
+			"librarything": [
+				"7730623"
+			]
+		},
+		"title": "The ingenious hidalgo Don Quixote de la Mancha",
+		"url": "https://openlibrary.org/books/OL22070067M/The_ingenious_hidalgo_Don_Quixote_de_la_Mancha",
+		"number_of_pages": 1023,
+		"publish_date": "2003",
+		"key": "/books/OL22070067M",
+		"authors": [
+			{
+				"url": "https://openlibrary.org/authors/OL6884519A/Miguel_de_Cervantes_Saavedra",
+				"name": "Miguel de Cervantes Saavedra"
+			}
+		],
+		"by_statement": "by Miguel de Cervantes Saavedra, translated by John Rutherford with an introduction by Roberto Gonza\u0301lez Echevarri\u0301a.",
+		"publish_places": [
+			{
+				"name": "New York"
+			}
+		]
+	}
+}
