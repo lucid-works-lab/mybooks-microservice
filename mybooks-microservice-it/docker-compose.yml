@@ -1,0 +1,12 @@
+---
+version: '2'
+services:
+  wiremock-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: wiremock-server
+    ports:
+      - "9090:8080"
+      - "9443:8443"
+    restart: always
