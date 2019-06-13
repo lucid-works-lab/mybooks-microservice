@@ -5,6 +5,8 @@ import mybooks.eventbus.data.EventData
 import mybooks.eventbus.meta.EventMeta
 import mybooks.repo.BookRepository
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
@@ -16,7 +18,11 @@ import java.util.function.Function
 import java.util.function.Supplier
 
 @Configuration
+@ConfigurationProperties
 class MyBooksService {
+
+    @Value("\${OPEN_LIBRARY_URL:}") //https://openlibrary.org/api
+    lateinit var openLibraryURL: String
 
     @Bean
     @Qualifier("addBook")
@@ -31,7 +37,7 @@ class MyBooksService {
     fun loadBook(restTemplate: RestTemplate, bookRepo: BookRepository): Consumer<String> {
         return Consumer {
             val openLibBook: Map<String, Any>? =
-                    restTemplate.getForObject("https://openlibrary.org/api/books?bibkeys=ISBN:$it&jscmd=data&format=json")
+                    restTemplate.getForObject("$openLibraryURL/books?bibkeys=ISBN:$it&jscmd=data&format=json")
             val book = Book(
                     isbn = it,
                     title = (openLibBook?.get("ISBN:$it") as Map<String, Any>)["title"] as String,
