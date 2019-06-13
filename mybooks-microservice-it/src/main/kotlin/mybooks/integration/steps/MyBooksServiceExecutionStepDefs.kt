@@ -16,13 +16,24 @@ class MyBooksServiceExecutionStepDefs : StepDefs {
         When("^calling addBook endpoint (\\S+)$") { endpoint: String ->
             val request = HttpPost("$endpoint/addBook")
             request.entity = StringEntity("""
-{
-    "isbn": "asd",
-    "title": "The Book",
-    "authors": ["Abc", "Def"],
-    "published": "2012-01"
-}
+            {
+                "isbn": "asd",
+                "title": "The Book",
+                "authors": ["Abc", "Def"],
+                "published": "2012-01"
+            }
             """.trimIndent(),
+                    ContentType.APPLICATION_JSON)
+            request.addHeader("accept", "application/json")
+            val httpClient = HttpClients.createDefault()
+            val response = httpClient.execute(request)
+            context.responseBody = EntityUtils.toString(response.entity)
+            context.statusCode = response.statusLine.statusCode
+        }
+
+        When("^calling loadBook endpoint (\\S+)$") { endpoint: String ->
+            val request = HttpPost("$endpoint/loadBook")
+            request.entity = StringEntity("9780980200447",
                     ContentType.APPLICATION_JSON)
             request.addHeader("accept", "application/json")
             val httpClient = HttpClients.createDefault()
