@@ -35,7 +35,7 @@ class OpenLibraryMock {
 }
 
 fun main() {
-    WireMock.configureFor("localhost", 9090);
+    WireMock.configureFor("localhost", 9090)
     WireMock.removeAllMappings()
     OpenLibraryMock().mockFor(OpenLibraryMock.Mapping.located)
 }

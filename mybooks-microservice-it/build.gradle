@@ -1,0 +1,122 @@
+apply plugin: 'kotlin-spring'
+apply plugin: 'eclipse'
+apply plugin: 'com.adarshr.test-logger'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'jacoco'
+
+dependencies {
+    compile(
+            'com.amazonaws:aws-xray-recorder-sdk-core:2.1.0',
+            'com.amazonaws:aws-xray-recorder-sdk-aws-sdk:2.1.0',
+            'com.amazonaws:aws-xray-recorder-sdk-apache-http:2.1.0',
+            'com.amazonaws:aws-xray-recorder-sdk-sql-postgres:2.1.0',
+            'com.amazonaws:aws-xray-recorder-sdk-sql-mysql:2.1.0'
+    )
+
+    detekt('io.gitlab.arturbosch.detekt:detekt-formatting')
+
+    implementation(
+            'org.springframework.boot:spring-boot-starter-data-rest:2.1.3.RELEASE',
+            'org.springframework.boot:spring-boot-starter-data-jpa:2.1.3.RELEASE',
+            'org.springframework:spring-context:5.1.1.RELEASE',
+            'com.amazonaws:aws-java-sdk-core',
+            'com.amazonaws:aws-java-sdk-dynamodb',
+            'com.amazonaws:aws-java-sdk-sts',
+            'com.amazonaws:aws-java-sdk-kinesis:1.11.461',
+            'org.reflections:reflections:0.9.11',
+            'software.amazon.awssdk:kinesis:2.1.3',
+            'com.amazonaws:aws-lambda-java-core',
+            'com.amazonaws:aws-lambda-java-events',
+            'com.fasterxml.jackson.core:jackson-databind',
+            'com.fasterxml.jackson.module:jackson-module-kotlin',
+            'org.jetbrains.kotlin:kotlin-reflect',
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            'org.jetbrains.kotlin:kotlin-script-runtime',
+            'org.jetbrains.kotlin:kotlin-script-util',
+            'org.jetbrains.kotlin:kotlin-compiler-embeddable',
+            'ch.qos.logback:logback-classic:1.2.3',
+            'ch.qos.logback.contrib:logback-json-classic:0.1.5',
+            'ch.qos.logback.contrib:logback-jackson:0.1.5',
+            'org.junit.jupiter:junit-jupiter-api',
+            'org.junit.jupiter:junit-jupiter-params:5.2.0',
+            'org.mockito:mockito-core:2.23.0',
+            'org.mockito:mockito-junit-jupiter:2.18.3',
+            'com.amazonaws:DynamoDBLocal:1.11.477',
+            'io.cucumber:cucumber-java8',
+            'io.cucumber:cucumber-junit',
+            'io.cucumber:cucumber-spring',
+            "com.github.tomakehurst:wiremock-jre8:2.21.0",
+            'io.kotlintest:kotlintest-extensions-spring:3.3.1',
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.junit.jupiter:junit-jupiter-api',
+            'org.junit.jupiter:junit-jupiter-params',
+            'org.mockito:mockito-junit-jupiter',
+            'org.mockito:mockito-core',
+            'org.hamcrest:java-hamcrest',
+            'org.jetbrains.kotlin:kotlin-test',
+            'com.h2database:h2:1.4.199',
+            'org.postgresql:postgresql:42.2.5',
+            'com.amazonaws:aws-java-sdk-secretsmanager:1.11.513'
+    )
+
+    runtimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine',
+            'com.almworks.sqlite4java:sqlite4java'
+    )
+
+}
+
+/* Copy the native files */
+task copyNativeDeps(type: Copy) {
+    from(configurations.compile + configurations.testCompile) {
+        include "*.dylib"
+        include "*.so"
+        include "*.dll"
+    }
+    into 'build/libs'
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+        excludeEngines 'junit-vintage'
+    }
+
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/test.exec")
+    }
+
+    systemProperty 'java.library.path', 'build/libs'
+
+    environment 'AWS_ACCESS_KEY_ID', 'applmgr'
+    environment 'AWS_DEFAULT_REGION', 'us-east-1'
+    environment 'AWS_SECRET_ACCESS_KEY', 'applmgr'
+
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom runtime
+    }
+}
+
+task integrationTest() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.main.runtimeClasspath
+            args = ['--plugin', 'html:build/reports/cucumber/cucumber-html-report',
+                    '--plugin', 'json:build/reports/cucumber/cucumber-json-report.json',
+                    '--tags', cucumberTag,
+                    'src/main/resources/features']
+            jvmArgs = ['-ea', '-Djava.library.path=build/libs', '-Djmeter.home=src/main/resources/jmeter-home', '-Duser.timezone=America/Toronto']
+        }
+    }
+}
+
+task publish {
+    // release artifact
+}
+
+compileKotlin.dependsOn copyNativeDeps
