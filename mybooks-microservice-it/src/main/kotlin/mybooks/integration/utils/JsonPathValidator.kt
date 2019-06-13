@@ -19,9 +19,9 @@ object JsonPathValidator {
     }
 
     val scriptEngine = ScriptEngineManager().getEngineByExtension("kts").also {
-        it.eval("import com.loyalty.nova.common.test.utils.JsonPathValidator.getShiftedStartDate")
-        it.eval("import com.loyalty.nova.common.test.utils.JsonPathValidator.getShiftedEndDate")
-        it.eval("import com.loyalty.nova.common.test.utils.JsonPathValidator.getShiftedTriggerDate")
+        it.eval("import mybooks.integration.utils.JsonPathValidator.getShiftedStartDate")
+        it.eval("import mybooks.integration.utils.JsonPathValidator.getShiftedEndDate")
+        it.eval("import mybooks.integration.utils.JsonPathValidator.getShiftedTriggerDate")
     }
 
     @Suppress("UnsafeCast")
