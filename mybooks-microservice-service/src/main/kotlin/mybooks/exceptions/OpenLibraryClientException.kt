@@ -1,0 +1,3 @@
+package mybooks.exceptions
+
+class OpenLibraryClientException:RuntimeException()

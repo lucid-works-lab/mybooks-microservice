@@ -3,12 +3,16 @@ package mybooks
 import mybooks.eventbus.Event
 import mybooks.eventbus.data.EventData
 import mybooks.eventbus.meta.EventMeta
+import mybooks.exceptions.OpenLibraryClientException
+import mybooks.exceptions.OpenLibraryServerException
 import mybooks.repo.BookRepository
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
+import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import java.time.YearMonth
@@ -16,6 +20,7 @@ import java.time.format.DateTimeFormatter
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
+
 
 @Configuration
 @ConfigurationProperties
@@ -36,24 +41,33 @@ class MyBooksService {
     @Qualifier("loadBook")
     fun loadBook(restTemplate: RestTemplate, bookRepo: BookRepository): Consumer<String> {
         return Consumer {
-            val openLibBook: Map<String, Any>? =
-                    restTemplate.getForObject("$openLibraryURL/books?bibkeys=ISBN:$it&jscmd=data&format=json")
-            val book = Book(
-                    isbn = it,
-                    title = (openLibBook?.get("ISBN:$it") as Map<String, Any>)["title"] as String,
-                    authors = ((openLibBook["ISBN:$it"] as Map<String, Any>)["authors"] as List<Map<String, Any>>)
-                            .map { publisher -> publisher["name"] as String },
-                    published = YearMonth.parse((openLibBook["ISBN:$it"] as Map<String, Any>)["publish_date"] as String,
-                            DateTimeFormatter.ofPattern("MMMM yyyy"))
-            )
-            bookRepo.save(book)
+            try {
+                val openLibBook: Map<String, Any>? =
+                        restTemplate.getForObject("$openLibraryURL/books?bibkeys=ISBN:$it&jscmd=data&format=json")
+                val book = Book(
+                        isbn = it,
+                        title = (openLibBook?.get("ISBN:$it") as Map<String, Any>)["title"] as String,
+                        authors = ((openLibBook["ISBN:$it"] as Map<String, Any>)["authors"] as List<Map<String, Any>>)
+                                .map { publisher -> publisher["name"] as String },
+                        published = YearMonth.parse((openLibBook["ISBN:$it"] as Map<String, Any>)["publish_date"] as String,
+                                DateTimeFormatter.ofPattern("MMMM yyyy"))
+                )
+                bookRepo.save(book)
+            } catch (e: HttpStatusCodeException) {
+                when (e.statusCode.series()) {
+                    HttpStatus.Series.CLIENT_ERROR -> throw OpenLibraryClientException()
+                    HttpStatus.Series.SERVER_ERROR -> throw OpenLibraryServerException()
+                    else -> throw e
+                }
+
+            }
         }
     }
 
     @Bean
     @Qualifier("removeBook")
     fun removeBook(bookRepo: BookRepository): Consumer<String> {
-        return Consumer {isbn ->
+        return Consumer { isbn ->
             bookRepo.deleteById(isbn)
         }
     }

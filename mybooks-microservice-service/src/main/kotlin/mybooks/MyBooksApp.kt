@@ -6,6 +6,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.util.ErrorHandler
+import org.springframework.web.client.ResponseErrorHandler
 import org.springframework.web.client.RestTemplate
 
 @SpringBootApplication
@@ -15,7 +17,9 @@ class MyBooksApp {
     fun objectMapper(): ObjectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
     @Bean
-    fun restTemplate(): RestTemplate = RestTemplate()
+    fun restTemplate(): RestTemplate {
+        return RestTemplate()
+    }
 
 }
 

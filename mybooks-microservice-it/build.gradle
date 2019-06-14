@@ -56,7 +56,8 @@ dependencies {
             'org.jetbrains.kotlin:kotlin-test',
             'com.h2database:h2:1.4.199',
             'org.postgresql:postgresql:42.2.5',
-            'com.amazonaws:aws-java-sdk-secretsmanager:1.11.513'
+            'com.amazonaws:aws-java-sdk-secretsmanager:1.11.513',
+            project(':mybooks-microservice-test-utils')
     )
 
     runtimeOnly(

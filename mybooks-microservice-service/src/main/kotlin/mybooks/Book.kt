@@ -17,7 +17,7 @@ data class Book(
 
         @ElementCollection(fetch = FetchType.EAGER)
         @CollectionTable
-        val authors: List<String> = listOf(),
+        val authors: List<String>,
 
-        val published: YearMonth
+        val published: YearMonth?
 )
