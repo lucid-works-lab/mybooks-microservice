@@ -17,7 +17,7 @@ class HttpValidationStepDefs : StepDefs {
         Given("^verifying status code is (\\d+)$") { statusCode: Int ->
             Assert.assertEquals(statusCode, context.statusCode)
         }
-        Given("^verifying response body matches (.+)$") { regex: String ->
+        Given("^verifying response body matches (.*)$") { regex: String ->
             Assert.assertThat(context.responseBody, Matchers.matchesPattern(regex))
         }
         Given("^verifying response body paths$") { table: DataTable ->

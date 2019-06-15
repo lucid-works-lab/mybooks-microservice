@@ -17,10 +17,10 @@ class MyBooksServiceExecutionStepDefs : StepDefs {
             val request = HttpPost("$endpoint/addBook")
             request.entity = StringEntity("""
             {
-                "isbn": "asd",
-                "title": "The Book",
-                "authors": ["Abc", "Def"],
-                "published": "2012-01"
+                "isbn": "0060934344",
+                "title": "Don Quixote",
+                "authors": ["Miguel de Cervantes"],
+                "published": "2005-04"
             }
             """.trimIndent(),
                     ContentType.APPLICATION_JSON)
