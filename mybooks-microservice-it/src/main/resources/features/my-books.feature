@@ -3,9 +3,10 @@ Feature: My Books regression tests
   Scenario Outline: Call addBook - <description>
     When calling addBook endpoint <endpoint>
     Then verifying status code is 202
+    When calling getBookByISBN endpoint <endpoint>
     And verifying response body paths
-      | path     | value      |
-      | $.*.isbn | 0060934344 |
+      | path   | value      |
+      | $.isbn | 0060934344 |
 
   @local
     Examples:

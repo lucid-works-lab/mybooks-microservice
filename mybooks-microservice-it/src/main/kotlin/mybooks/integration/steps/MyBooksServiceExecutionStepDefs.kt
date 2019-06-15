@@ -1,5 +1,6 @@
 package mybooks.integration.steps
 
+import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.ContentType
 import org.apache.http.entity.StringEntity
@@ -24,6 +25,15 @@ class MyBooksServiceExecutionStepDefs : StepDefs {
             }
             """.trimIndent(),
                     ContentType.APPLICATION_JSON)
+            request.addHeader("accept", "application/json")
+            val httpClient = HttpClients.createDefault()
+            val response = httpClient.execute(request)
+            context.responseBody = EntityUtils.toString(response.entity)
+            context.statusCode = response.statusLine.statusCode
+        }
+
+        When("^calling getBookByISBN endpoint (\\S+)$") { endpoint: String ->
+            val request = HttpGet("$endpoint/getBookByISBN/0060934344")
             request.addHeader("accept", "application/json")
             val httpClient = HttpClients.createDefault()
             val response = httpClient.execute(request)
