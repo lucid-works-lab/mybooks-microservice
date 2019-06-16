@@ -73,13 +73,9 @@ subprojects {
     dependencies {
         testImplementation(
                 'org.springframework.boot:spring-boot-starter-test',
-                'org.junit.jupiter:junit-jupiter-params',
+                'org.junit.jupiter:junit-jupiter',
                 'org.hamcrest:java-hamcrest',
                 'org.jetbrains.kotlin:kotlin-test'
-        )
-
-        testRuntimeOnly(
-                'org.junit.jupiter:junit-jupiter-engine',
         )
     }
 
@@ -89,9 +85,7 @@ subprojects {
         }
 
         dependencies {
-            dependency('org.junit.jupiter:junit-jupiter-api:5.4.2')
-            dependency('org.junit.jupiter:junit-jupiter-params:5.4.2')
-            dependency('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+            dependency('org.junit.jupiter:junit-jupiter:5.5.0-RC1')
             dependency('com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8')
             dependency('com.amazonaws:aws-lambda-java-core:1.2.0')
             dependency('com.amazonaws:aws-lambda-java-events:2.2.6')
