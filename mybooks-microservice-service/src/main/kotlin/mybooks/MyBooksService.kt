@@ -27,7 +27,7 @@ import java.util.function.Supplier
 @ConfigurationProperties
 class MyBooksService {
 
-    @Value("\${OPEN_LIBRARY_URL:}") //https://openlibrary.org/api
+    @Value("\${OPEN_LIBRARY_URL:}")
     lateinit var openLibraryURL: String
 
     @Bean

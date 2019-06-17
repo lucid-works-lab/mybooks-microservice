@@ -9,7 +9,7 @@
     <option name="MAIN_CLASS_NAME" value="mybooks.MyBooksAppKt" />
     <option name="WORKING_DIRECTORY" value="" />
     <envs>
-      <env name="OPEN_LIBRARY_URL" value="http://localhost:9090/wiremock/openlibrary" />
+      <env name="OPEN_LIBRARY_URL" value="http://localhost:9090/" />
     </envs>
     <method v="2">
       <option name="Make" enabled="true" />

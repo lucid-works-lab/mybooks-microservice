@@ -32,8 +32,8 @@ class MyBooksServiceExecutionStepDefs : StepDefs {
             context.statusCode = response.statusLine.statusCode
         }
 
-        When("^calling getBookByISBN endpoint (\\S+)$") { endpoint: String ->
-            val request = HttpGet("$endpoint/getBookByISBN/0060934344")
+        When("^calling getBookByISBN endpoint (\\S+) with ISBN (\\S+)$") { endpoint: String, isbn: String  ->
+            val request = HttpGet("$endpoint/getBookByISBN/$isbn")
             request.addHeader("accept", "application/json")
             val httpClient = HttpClients.createDefault()
             val response = httpClient.execute(request)
@@ -41,9 +41,9 @@ class MyBooksServiceExecutionStepDefs : StepDefs {
             context.statusCode = response.statusLine.statusCode
         }
 
-        When("^calling loadBook endpoint (\\S+)$") { endpoint: String ->
+        When("^calling loadBook endpoint (\\S+) with ISBN (\\S+)$") { endpoint: String, isbn: String ->
             val request = HttpPost("$endpoint/loadBook")
-            request.entity = StringEntity("9780980200447",
+            request.entity = StringEntity(isbn,
                     ContentType.APPLICATION_JSON)
             request.addHeader("accept", "application/json")
             val httpClient = HttpClients.createDefault()

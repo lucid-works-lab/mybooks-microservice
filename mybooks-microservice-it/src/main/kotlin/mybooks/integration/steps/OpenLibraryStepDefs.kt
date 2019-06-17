@@ -22,7 +22,6 @@ class OpenLibraryStepDefs : StepDefs {
             } catch (e:Exception) {
                 println("Wiremock is probably already running on host $host and port $port")
             }
-
         }
         When("^stabbing OpenLibraryMock for stub (\\S+)$") { stubType: String ->
             OpenLibraryMock().mockFor(OpenLibraryMock.StubType.valueOf(stubType))

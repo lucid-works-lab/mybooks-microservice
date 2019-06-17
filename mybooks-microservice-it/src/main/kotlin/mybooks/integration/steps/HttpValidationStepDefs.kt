@@ -14,13 +14,13 @@ class HttpValidationStepDefs : StepDefs {
     lateinit var context: RestCallContext
 
     init {
-        Given("^verifying status code is (\\d+)$") { statusCode: Int ->
+        Then("^verifying status code is (\\d+)$") { statusCode: Int ->
             Assert.assertEquals(statusCode, context.statusCode)
         }
-        Given("^verifying response body matches (.*)$") { regex: String ->
+        Then("^verifying response body matches (.*)$") { regex: String ->
             Assert.assertThat(context.responseBody, Matchers.matchesPattern(regex))
         }
-        Given("^verifying response body paths$") { table: DataTable ->
+        Then("^verifying response body paths$") { table: DataTable ->
             val rules: List<ValidationRule> =
                     table.asMaps().map { list ->
                         ValidationRule(list["path"]
