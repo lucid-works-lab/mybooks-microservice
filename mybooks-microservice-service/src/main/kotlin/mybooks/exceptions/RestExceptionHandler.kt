@@ -27,4 +27,11 @@ class RestExceptionHandler : ResponseEntityExceptionHandler() {
         val errorResponse = ErrorResponse(Date(), status.value(), ex.javaClass.canonicalName, status, ex.message)
         return ResponseEntity(errorResponse, status)
     }
+
+    @ExceptionHandler(OpenLibraryNotFoundException::class)
+    fun handleOpenLibraryNotFoundException(ex: Exception): ResponseEntity<ErrorResponse> {
+        val status = HttpStatus.NOT_FOUND
+        val errorResponse = ErrorResponse(Date(), status.value(), ex.javaClass.canonicalName, status, ex.message)
+        return ResponseEntity(errorResponse, status)
+    }
 }

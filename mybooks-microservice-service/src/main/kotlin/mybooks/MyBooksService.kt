@@ -4,6 +4,7 @@ import mybooks.eventbus.Event
 import mybooks.eventbus.data.EventData
 import mybooks.eventbus.meta.EventMeta
 import mybooks.exceptions.OpenLibraryClientException
+import mybooks.exceptions.OpenLibraryNotFoundException
 import mybooks.exceptions.OpenLibraryServerException
 import mybooks.repo.BookRepository
 import org.springframework.beans.factory.annotation.Qualifier
@@ -44,6 +45,11 @@ class MyBooksService {
             try {
                 val openLibBook: Map<String, Any>? =
                         restTemplate.getForObject("$openLibraryURL/books?bibkeys=ISBN:$it&jscmd=data&format=json")
+                openLibBook?.let { map ->
+                    if (map.isEmpty()) {
+                        throw OpenLibraryNotFoundException("No book found for ISBN $it")
+                    }
+                }
                 val book = Book(
                         isbn = it,
                         title = (openLibBook?.get("ISBN:$it") as Map<String, Any>)["title"] as String,

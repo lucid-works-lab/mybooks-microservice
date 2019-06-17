@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MyBooks Unit Test" type="JUnit" factoryName="JUnit">
+    <module name="mybooks-microservice-service_test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="mybooks.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="mybooks" />
+    <option name="MAIN_CLASS_NAME" value="mybooks.MyBooksFunctionTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="tags" />
+    <option name="PARAMETERS" value="" />
+    <tag value="unit" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
