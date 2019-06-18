@@ -4,4 +4,4 @@ jdk:
   - oraclejdk8
 
 script:
-  - ./gradlew build --project-cache-dir=./detekt-cache --stacktrace --scan -s
+  - ./gradlew build --stacktrace --scan -s
