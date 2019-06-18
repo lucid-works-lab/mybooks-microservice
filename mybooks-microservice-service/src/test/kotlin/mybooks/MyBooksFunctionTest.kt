@@ -27,7 +27,6 @@ class MyBooksFunctionTest {
     @Qualifier("getAllBooks")
     lateinit var getAllBooks: Supplier<List<Book>>
 
-
     @Test
     fun saveAndRetrieveBook() {
         val book =  Book(isbn = "0060934344",
