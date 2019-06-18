@@ -6,7 +6,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import mybooks.mocks.OpenLibraryMock
 import org.springframework.beans.factory.annotation.Autowired
 
-class OpenLibraryStepDefs : StepDefs {
+class OpenLibraryMockStepDefs : StepDefs {
 
     @Autowired
     lateinit var context: RestCallContext

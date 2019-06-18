@@ -2,7 +2,7 @@
   <configuration default="false" name="WireMock" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
-        <option name="sourceFilePath" value="mybooks-microservice-it/docker-compose.yml" />
+        <option name="sourceFilePath" value="mybooks-microservice-test-utils/docker-compose.yml" />
       </settings>
     </deployment>
     <method v="2" />
