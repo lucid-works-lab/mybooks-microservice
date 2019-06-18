@@ -12,6 +12,7 @@ buildscript {
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.4.RELEASE'
         classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+        classpath "com.gradle:build-scan-plugin:2.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
@@ -32,6 +33,7 @@ buildscript {
 
 apply plugin: 'net.researchgate.release'
 apply plugin: 'org.owasp.dependencycheck'
+apply plugin: "com.gradle.build-scan"
 
 allprojects {
     group = 'mybook'
@@ -141,6 +143,11 @@ subprojects {
         executionData = files("$buildDir/jacoco/test.exec")
     }
 
+}
+
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
 }
 
 task build {}
