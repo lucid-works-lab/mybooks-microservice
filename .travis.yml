@@ -8,6 +8,11 @@ jobs:
     - stage: build
       script:
         - ./gradlew build --stacktrace --scan -s
+    - stage: docker
+      script:
+        - docker build --tag lucidworkslab/mybooks .
+        - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        - docker push lucidworkslab/mybooks
     - stage: deploy
       script: ./deploy
     - stage: regression

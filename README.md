@@ -18,3 +18,5 @@ note: Windows - shared drives in settings!, reset credentials!
 [Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
 
+Deploy to DigitalOcean
+http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalocean/
