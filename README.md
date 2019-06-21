@@ -20,3 +20,13 @@ note: Windows - shared drives in settings!, reset credentials!
 
 Deploy to DigitalOcean
 http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalocean/
+
+
+
+##On DigitalOcean instance:
+`>> docker run --rm -p 8080:8080 lucidworkslab/mybooks`
+
+`>> ufw allow 8080`
+
+
+https://monicalent.com/blog/2017/12/21/deploy-static-sites-digital-ocean-travis/
