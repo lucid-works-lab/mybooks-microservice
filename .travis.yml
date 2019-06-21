@@ -10,7 +10,7 @@ jobs:
   include:
   - stage: build
     script:
-    - "./gradlew build --stacktrace --scan -s"
+    - ./gradlew build --stacktrace --scan
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - docker build --file mybooks-microservice-service/Dockerfile --build-arg JAR_FILE=mybooks-microservice-service/build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar --tag lucidworkslab/mybooks .
     - docker push lucidworkslab/mybooks
@@ -18,7 +18,7 @@ jobs:
     - docker push lucidworkslab/mybooks-wiremock
   - stage: deploy
     script:
-      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$DROPLET_IP 'docker stop $(docker ps -aq); docker rmi $(docker images -a -q); docker run -d --rm -p 8080:8080 lucidworkslab/mybooks; docker run -d --rm -p 9090:8080 lucidworkslab/mybooks-wiremock'
+      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$DROPLET_IP 'docker stop $(docker ps -aq); docker rm $(docker ps -aq); docker rmi $(docker images -a -q); docker run -d --rm -p 8080:8080 lucidworkslab/mybooks; docker run -d --rm -p 9090:8080 lucidworkslab/mybooks-wiremock'
   - stage: regression
     script:
       - ls

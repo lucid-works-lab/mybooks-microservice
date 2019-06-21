@@ -32,6 +32,7 @@ http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalo
 `>> docker run --rm -p 8080:8080 lucidworkslab/mybooks`
 
 `>> ufw allow 8080`
+`>> ufw allow 9090`
 
 ### add travis_rsa.pub
 
