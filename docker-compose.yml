@@ -1,9 +1,18 @@
 version: '3'
 services:
+  mybooks-server:
+    build:
+      context: .
+      dockerfile: mybooks-microservice-service/Dockerfile
+    hostname: wiremock-server
+    ports:
+      - "9090:8080"
+      - "9443:8443"
+    restart: always
   wiremock-server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: mybooks-microservice-test-utils/Dockerfile
     hostname: wiremock-server
     ports:
       - "9090:8080"

@@ -1,0 +1,12 @@
+version: '3'
+services:
+  mybooks-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar
+    hostname: mybooks-server
+    ports:
+      - "8080:8080"
+    restart: always
