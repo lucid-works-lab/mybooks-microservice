@@ -24,10 +24,14 @@ http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalo
 
 
 ##On DigitalOcean instance:
+
 `>> docker run --rm -p 8080:8080 lucidworkslab/mybooks`
 
 `>> ufw allow 8080`
 
+### add travis_rsa.pub
+
+`>> nano ~/.ssh/authorized_keys`
 
 https://monicalent.com/blog/2017/12/21/deploy-static-sites-digital-ocean-travis/
 
