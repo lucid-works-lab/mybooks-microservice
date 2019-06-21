@@ -101,6 +101,7 @@ task integrationTest() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.main.runtimeClasspath
             args = ['--plugin', 'html:build/reports/cucumber/cucumber-html-report',
                     '--plugin', 'json:build/reports/cucumber/cucumber-json-report.json',
+                    '--glue', 'mybooks.integration',
                     '--tags', cucumberTag,
                     'src/main/resources/features']
             jvmArgs = ['-ea', '-Djava.library.path=build/libs', '-Djmeter.home=src/main/resources/jmeter-home', '-Duser.timezone=America/Toronto']

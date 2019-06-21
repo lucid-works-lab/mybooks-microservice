@@ -21,4 +21,4 @@ jobs:
       - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mybooks.digitalocean.lucid.works 'docker stop $(docker ps -aq); docker rm $(docker ps -aq); docker rmi $(docker images -a -q); docker run -d --rm -p 8080:8080 --env OPEN_LIBRARY_URL=http://mybooks.digitalocean.lucid.works:9090/ lucidworkslab/mybooks; docker run -d --rm -p 9090:8080 lucidworkslab/mybooks-wiremock'
   - stage: regression
     script:
-      - ls
+      - ./gradlew integrationTest -PcucumberTag=@dev
