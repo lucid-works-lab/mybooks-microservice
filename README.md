@@ -1,5 +1,5 @@
 
-### Status
+### Travis Build Status
 [![Build Status](https://travis-ci.org/lucid-works-lab/mybooks-microservice.svg?branch=master)](https://travis-ci.org/lucid-works-lab/mybooks-microservice.svg?branch=master)
 
 # book-library
