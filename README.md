@@ -30,3 +30,5 @@ http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalo
 
 
 https://monicalent.com/blog/2017/12/21/deploy-static-sites-digital-ocean-travis/
+
+ssh -i ~/.ssh/lucid_works root@$DROPLET_IP
