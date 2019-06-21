@@ -18,7 +18,7 @@ jobs:
     - docker push lucidworkslab/mybooks
   - stage: deploy
     script:
-      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$DROPLET_IP 'docker run -d --rm -p 8080:8080 lucidworkslab/mybooks'
+      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@$DROPLET_IP 'docker stop $(docker ps -aq) & docker run -d --rm -p 8080:8080 lucidworkslab/mybooks'
   - stage: regression
     script:
       - ls
