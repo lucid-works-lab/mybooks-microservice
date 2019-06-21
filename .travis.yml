@@ -11,8 +11,6 @@ jobs:
   - stage: build
     script:
     - "./gradlew build --stacktrace --scan -s"
-  - stage: docker
-    script:
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - docker build --file mybooks-microservice-service/Dockerfile --build-arg JAR_FILE=mybooks-microservice-service/build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar --tag lucidworkslab/mybooks .
     - docker push lucidworkslab/mybooks
