@@ -12,7 +12,7 @@ class OpenLibraryMockStepDefs : StepDefs {
     lateinit var context: RestCallContext
 
     init {
-        When("^running WireMock on host (\\S+) and port (\\d+)$") { host: String, port: Int ->
+        When("^running WireMock on host (\\S+) and port (\\S+)$") { host: String, port: Int ->
 
             WireMock.configureFor(host, port)
 
