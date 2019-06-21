@@ -1,3 +1,7 @@
+
+### Status
+[![Build Status](https://travis-ci.org/lucid-works-lab/mybooks-microservice.svg?branch=master)](https://travis-ci.org/lucid-works-lab/mybooks-microservice.svg?branch=master)
+
 # book-library
 
 - add/load book item to catalogue
