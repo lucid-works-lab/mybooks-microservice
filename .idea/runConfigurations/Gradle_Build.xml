@@ -4,7 +4,7 @@
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--project-cache-dir=../../detekt-cache --stacktrace --scan -s" />
+      <option name="scriptParameters" value="--project-cache-dir=../../detekt-cache --stacktrace --scan" />
       <option name="taskDescriptions">
         <list />
       </option>
