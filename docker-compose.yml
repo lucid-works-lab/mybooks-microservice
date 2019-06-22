@@ -4,10 +4,13 @@ services:
     build:
       context: .
       dockerfile: mybooks-microservice-service/Dockerfile
-    hostname: wiremock-server
+      args:
+        JAR_FILE: mybooks-microservice-service/build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar
+    hostname: mybooks-server
     ports:
-      - "9090:8080"
-      - "9443:8443"
+      - "8080:8080"
+    environment:
+      OPEN_LIBRARY_URL: http://wiremock-server:8080/
     restart: always
   wiremock-server:
     build:
@@ -16,5 +19,4 @@ services:
     hostname: wiremock-server
     ports:
       - "9090:8080"
-      - "9443:8443"
     restart: always
