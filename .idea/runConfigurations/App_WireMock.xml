@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="App+WireMock" type="CompoundRunConfigurationType">
+    <toRun name="WireMock" type="docker-deploy" />
+    <toRun name="MyBooksApp" type="JetRunConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
