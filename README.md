@@ -21,13 +21,16 @@ note: Windows - shared drives in settings!, reset credentials!
 
 [Installing the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
+`>> sam local start-api`
 
-Deploy to DigitalOcean
+(make sure Docker Shared Drives Setting properly done)
+
+## Deploy to DigitalOcean
 http://webexpressive.com/blog/superfast-CI-CD-using-docker-travisci-and-digitalocean/
 
 
 
-##On DigitalOcean instance:
+## On DigitalOcean instance:
 
 `>> docker run --rm -p 8080:8080 lucidworkslab/mybooks`
 
