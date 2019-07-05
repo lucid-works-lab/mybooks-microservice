@@ -3,6 +3,7 @@ package mybooks
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -21,6 +22,17 @@ class MyBooksApp {
         return RestTemplate()
     }
 
+    @Bean
+    @Qualifier("eventStream")
+    fun eventStream(): InMemoryEventStream {
+        return InMemoryEventStream()
+    }
+
+    @Bean
+    @Qualifier("dlq")
+    fun dlq(): InMemoryEventStream {
+        return InMemoryEventStream()
+    }
 }
 
 fun main(vararg args: String) {

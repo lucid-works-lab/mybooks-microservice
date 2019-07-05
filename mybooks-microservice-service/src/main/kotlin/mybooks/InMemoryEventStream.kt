@@ -5,14 +5,12 @@ import mybooks.eventbus.EventStream
 import mybooks.eventbus.data.EventData
 import mybooks.eventbus.meta.EventMeta
 import org.springframework.beans.factory.DisposableBean
-import org.springframework.stereotype.Service
 import reactor.core.publisher.BaseSubscriber
 import reactor.core.publisher.DirectProcessor
 import reactor.core.publisher.Flux
 import kotlin.reflect.KClass
 
-@Service
-final class InMemoryEventStream : BaseSubscriber<Event<in EventData, in EventMeta>>(), DisposableBean, EventStream {
+class InMemoryEventStream : BaseSubscriber<Event<in EventData, in EventMeta>>(), DisposableBean, EventStream {
 
 
     private val publisher = DirectProcessor.create<Event<in EventData, in EventMeta>>()
@@ -31,9 +29,11 @@ final class InMemoryEventStream : BaseSubscriber<Event<in EventData, in EventMet
         return Flux.merge(
                 Flux.fromIterable(events),
                 publisher
-        ).filter { event -> event.data?.let {
-            data -> data::class == type
-        } ?: false } as Flux<Event<T, in EventMeta>>
+        ).filter { event ->
+            event.data?.let { data ->
+                data::class == type
+            } ?: false
+        } as Flux<Event<T, in EventMeta>>
     }
 
     override fun hookOnNext(event: Event<in EventData, in EventMeta>) {
