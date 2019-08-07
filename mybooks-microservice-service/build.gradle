@@ -63,9 +63,6 @@ test {
     includeEngines 'junit-jupiter'
     excludeEngines 'junit-vintage'
   }
-  jacoco {
-    destinationFile = file("${buildDir}/jacoco/test.exec")
-  }
 
   systemProperty 'java.library.path', 'build/libs'
   environment 'AWS_ACCESS_KEY_ID', 'applmgr'
