@@ -1,6 +1,6 @@
 language: java
 jdk:
-- oraclejdk8
+  - oraclejdk12
 before_install:
   - openssl aes-256-cbc -K $encrypted_4f9d2cbd4361_key -iv $encrypted_4f9d2cbd4361_iv
     -in travis_rsa.enc -out travis_rsa -d
@@ -12,13 +12,22 @@ jobs:
     script:
     - ./gradlew build --stacktrace --scan
     - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - docker build --file mybooks-microservice-service/Dockerfile --build-arg JAR_FILE=mybooks-microservice-service/build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar --tag lucidworkslab/mybooks .
+    - docker build
+      --file mybooks-microservice-service/Dockerfile
+      --build-arg JAR_FILE=mybooks-microservice-service/build/libs/mybooks-microservice-service-0.0.1-SNAPSHOT.jar
+      --tag lucidworkslab/mybooks .
     - docker push lucidworkslab/mybooks
-    - docker build --file mybooks-microservice-test-utils/Dockerfile --tag lucidworkslab/mybooks-wiremock .
+    - docker build
+      --file mybooks-microservice-test-utils/Dockerfile
+      --tag lucidworkslab/mybooks-wiremock .
     - docker push lucidworkslab/mybooks-wiremock
   - stage: deploy
     script:
-      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mybooks.digitalocean.lucid.works 'docker stop $(docker ps -aq); docker rm $(docker ps -aq); docker rmi $(docker images -a -q); docker run -d --rm -p 8080:8080 --env OPEN_LIBRARY_URL=http://mybooks.digitalocean.lucid.works:9090/ lucidworkslab/mybooks; docker run -d --rm -p 9090:8080 lucidworkslab/mybooks-wiremock'
+      - ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mybooks.digitalocean.lucid.works
+        'docker stop $(docker ps -aq); docker rm $(docker ps -aq);
+        docker rmi $(docker images -a -q);
+        docker run -d --rm -p 8080:8080 --env OPEN_LIBRARY_URL=http://mybooks.digitalocean.lucid.works:9090/ lucidworkslab/mybooks;
+        docker run -d --rm -p 9090:8080 lucidworkslab/mybooks-wiremock'
   - stage: regression
     script:
       - ./gradlew integrationTest -PcucumberTag=@dev
